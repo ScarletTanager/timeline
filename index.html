@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel='stylesheet' type='text/css' href='stylesheet.css'/>
+</head>
+<body>
+  <canvas id="mycanvas" width="700" height="700">
+    This text is displayed if your browser does not support HTML5 Canvas.
+  </canvas>
+
+  <div class="sidenav">
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    <a href="#clients">Clients</a>
+    <a href="#contact">Contact</a>
+  </div>
+
+  <div class="main">
+    <h2>My First JavaScript</h2>
+
+    <button type="button"
+    onclick="document.getElementById('demo').innerHTML = Date()">
+    Click me to display Date and Time.</button>
+
+    <p id="demo"></p>
+
+    <h2>Vertical Line</h2>
+
+    <button type="button"
+    onclick="extendLine()">
+    Click me to extend the line.</button>
+    <button type="button"
+    onclick="shortenLine()">
+    Click me to shorten the line.</button>
+    <button type="button" onclick="drawFace()">
+      Click me to draw a face.
+    </button>
+
+    <div class="vl" id="vline"></div>
+  </div>
+
+  <script type="text/javascript" src="lines.js"></script>
+  <script type="text/javascript" src="face.js"></script>
+</body>
+</html>

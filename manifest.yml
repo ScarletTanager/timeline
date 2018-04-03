@@ -1,0 +1,7 @@
+applications:
+  - name: timeline
+    memory: 256M
+    instances: 1
+    path: .
+    routes:
+        - route: timeline-constructor.mybluemix.net 

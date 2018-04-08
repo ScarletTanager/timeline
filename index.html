@@ -1,46 +1,77 @@
-<!DOCTYPE html>
 <html>
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel='stylesheet' type='text/css' href='stylesheet.css'/>
 </head>
 <body>
-  <canvas id="mycanvas" width="700" height="700">
+  <canvas id="mycanvas" width="1000" height="300">
     This text is displayed if your browser does not support HTML5 Canvas.
   </canvas>
+  <p>
+    <form name="ct" id="ct" onSubmit="createTimeline();return false;">
+      <table>
+        <tr>
+          <th colspan="4" class="tsh">Create Timeline</th>
+        </tr>
+        <tr>
+          <td/>
+          <td>Month</td>
+          <td>Day</td>
+          <td>Year</td>
+        </tr>
+        <tr>
+          <td>Starting Date</td>
+          <td><input type="text" id="startMonth" value="1"></td>
+          <td><input type="text" id="startDay" value="1"></td>
+          <td><input type="text" id="startYear" value="0"></td>
+        </tr>
+        <tr>
+          <td>Ending Date</td>
+          <td><input type="text" id="endMonth" value="1"></td>
+          <td><input type="text" id="endDay" value="1"></td>
+          <td><input type="text" id="endYear" value="2018"></td>
+        </tr>
+        <tr>
+          <td colspan="2"/>
+          <td>Date Interval</td>
+          <td><input type="text" id="interval" value=100></td>
+        </tr>
+        <tr>
+          <td colspan="3"/>
+          <td>
+            <button type="submit" title="Create Timeline">
+              Create Timeline.
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="4"/>
+        </tr>
+        <tr>
+          <td colspan="4" class="tsh">Add Event to Timeline</td>
+        </tr>
+        <tr>
+          <td>Date</td>
+          <td><input type="text" id="eventMonth" value="1"></td>
+          <td><input type="text" id="eventDay" value="1"></td>
+          <td><input type="text" id="eventYear"></td>
+        </tr>
+        <tr>
+          <td>Name</td>
+          <td colspan="3"><input type="text" id="eventName"></td>
+        </tr>
+        <tr>
+          <td colspan="3"/>
+          <td>
+            <button type="button" onclick="addTimelineEvent()">
+              <b>Add</b>
+            </button>
+          </td>
+        </tr>
+        </table>
 
-  <div class="sidenav">
-    <a href="#about">About</a>
-    <a href="#services">Services</a>
-    <a href="#clients">Clients</a>
-    <a href="#contact">Contact</a>
-  </div>
-
-  <div class="main">
-    <h2>My First JavaScript</h2>
-
-    <button type="button"
-    onclick="document.getElementById('demo').innerHTML = Date()">
-    Click me to display Date and Time.</button>
-
-    <p id="demo"></p>
-
-    <h2>Vertical Line</h2>
-
-    <button type="button"
-    onclick="extendLine()">
-    Click me to extend the line.</button>
-    <button type="button"
-    onclick="shortenLine()">
-    Click me to shorten the line.</button>
-    <button type="button" onclick="drawFace()">
-      Click me to draw a face.
-    </button>
-
-    <div class="vl" id="vline"></div>
-  </div>
-
-  <script type="text/javascript" src="lines.js"></script>
-  <script type="text/javascript" src="face.js"></script>
-</body>
-</html>
+      </form>
+    </p>
+    <script type="text/javascript" src="vendor/moment.js"></script>
+    <script type="text/javascript" src="draw.js"></script>
+  </body>
+  </html>

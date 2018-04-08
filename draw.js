@@ -1,6 +1,12 @@
 function createTimeline () {
+  var timeline = {
+    startDate: 0,
+    endDate: 0,
+    events: []
+  };
   var my_canvas = document.getElementById('mycanvas');
   var context = my_canvas.getContext('2d');
+  console.log("Clearing canvas");
   context.clearRect(0, 0, my_canvas.width, my_canvas.height);
 
   context.strokeStyle = "#000000";
@@ -12,6 +18,7 @@ function createTimeline () {
   var startY = 200;
   var dateY = 225;
 
+  console.log("drawing timeline");
   context.beginPath();
   context.moveTo(startX,startY);
   context.lineTo(endX,startY);
@@ -25,19 +32,42 @@ function drawDateHashes (ctx, startX, endX, startY, dateY) {
   var startDate = getStartDate();
   var endDate = getEndDate();
   var interval = getDateInterval();
+  var lineLength = endX - startX;
+  var duration = endDate.diff(startDate);
+
   // Draw beginning and ending hashes
   drawDateHash(ctx, startX, startY, dateY, startDate);
   drawDateHash(ctx, endX, startY, dateY, endDate);
 
-  var lineLength = endX - startX;
-  var duration = endDate - startDate;
-  var intervalCount = duration / interval;
-  var intervalLineLength = Math.trunc(lineLength / intervalCount);
-  intervalCount = Math.trunc(intervalCount);
-
-  for (i = 1; i <= intervalCount; i++) {
-    drawDateHash(ctx, startX + (i * intervalLineLength), startY, dateY, parseInt(startDate) + (i * interval));
+  // Draw the interval hashes
+  var intervalDate = moment(startDate);
+  while(intervalDate.add(interval, 'y').isBefore(endDate)) {
+    var xOffset = getTimelineOffset(lineLength, duration, startDate, intervalDate);
+    console.log("Setting interval hash at " + intervalDate.format("M-D-Y") + " with offset " + xOffset);
+    var intervalX = startX + xOffset;
+    console.log("Drawing interval hash from " + intervalX
+    + "," + startY + " to " + intervalX + "," + dateY);
+    drawDateHash(ctx, intervalX, startY, dateY, intervalDate);
   }
+}
+
+// Find the correct X offset for date d on the timeline
+// len is the length in pixels of the timeline
+// span is the timespan of the timeline in milliseconds
+// s is the moment representation of the timeline start date
+// d is a moment represention of the event date
+function getTimelineOffset(len, span, s, d) {
+  if (d.isBefore(s)) {
+    console.log("Bad event date");
+    return 0;
+  }
+
+  console.log("Computing offset with len: " + len + "; span: " + span
+    + "; startDate: " + s.format("M-D-Y") + "; eventDate: " + d.format("M-D-Y"));
+  var t = Math.abs(s.diff(d));
+  var offset = Math.trunc((t/Math.abs(span)) * Math.abs(len));
+  console.log("X offset computed as " + offset);
+  return offset;
 }
 
 function drawDateHash (ctx, x, startY, endY, date) {
@@ -47,16 +77,22 @@ function drawDateHash (ctx, x, startY, endY, date) {
   ctx.lineTo(x, endY);
   ctx.stroke();
   ctx.textAlign = "center";
-  ctx.fillText(date, x, endY + 25);
+  ctx.fillText(date.format("M-D-Y"), x, endY + 25);
 }
 
 function getStartDate () {
-  var startDate = document.getElementById('startDate').value;
+  var startDate = moment([
+    document.getElementById('startMonth').value,
+    document.getElementById('startDay').value,
+    document.getElementById('startYear').value].join("-"), "M-D-Y");
   return startDate;
 }
 
 function getEndDate () {
-  var endDate = document.getElementById('endDate').value;
+    var endDate = moment([
+      document.getElementById('endMonth').value,
+      document.getElementById('endDay').value,
+      document.getElementById('endYear').value].join("-"), "M-D-Y");
   return endDate;
 }
 
@@ -83,7 +119,7 @@ function addTimelineEvent () {
   var startY = 200;
   var eventY = 175;
 
-  var eventX = startX + Math.trunc((eventDate - startDate)/(endDate - startDate) * (endX - startX));
+  var eventX = startX + getTimelineOffset((endX - startX), startDate.diff(endDate), startDate, eventDate);
   ctx.beginPath();
   ctx.moveTo(eventX, startY);
   ctx.lineTo(eventX, eventY);
@@ -93,8 +129,11 @@ function addTimelineEvent () {
 }
 
 function getEventDate () {
-  var eventDate = document.getElementById('eventDate').value;
-  return parseInt(eventDate);
+  var eventDate = moment([
+    document.getElementById('eventMonth').value,
+    document.getElementById('eventDay').value,
+    document.getElementById('eventYear').value].join("-"), "M-D-Y");
+  return eventDate;
 }
 
 function getEventName () {

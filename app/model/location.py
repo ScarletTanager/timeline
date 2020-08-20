@@ -5,8 +5,9 @@
 
 class location:
     def __init__(self, name, parent=None):
-        if parent != None and type(parent).__name__ != 'Location':
-            raise TypeError('Argument must be of type Location')
+        if parent is not None and not isinstance(parent, location):
+            raise TypeError(
+                'Argument must be of type location (or a subclass)')
         self.name = name
         self.parent = parent
 

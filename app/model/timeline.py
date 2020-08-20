@@ -9,17 +9,21 @@ class Timeline:
 
         self.events = []
         self.actors = set()
+        self.locations = set()
 
     def add_event(self, e):
         if not(isinstance(e, event.event)):
             raise TypeError(
                 'Timeline events must be of type event.event (or a subclass)')
 
+        # Event participants must be actors in the timeline
         if e.participants - self.actors:
             raise InvalidEventError(
                 'Event has participants not actors in timeline')
 
         self.events.append(e)
+        if e.location is not None:
+            self.locations.add(e.location)
 
     def add_actor(self, a):
         if not(isinstance(a, actor.actor)):
@@ -30,6 +34,9 @@ class Timeline:
 
     def has_actor(self, a):
         return a in self.actors
+
+    def has_location(self, l):
+        return l in self.locations
 
 
 class InvalidEventError(Exception):

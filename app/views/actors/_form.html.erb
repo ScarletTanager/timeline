@@ -1,0 +1,18 @@
+<%= form_with model: actor do |form| %>
+  <div>
+    <%= form.label :first %><br>
+    <%= form.text_field :first %>
+    <% @actor.errors.full_messages_for(:first).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.label :last %><br>
+    <%= form.text_field :last %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

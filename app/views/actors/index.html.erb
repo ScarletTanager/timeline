@@ -1,0 +1,11 @@
+<h1>Actors</h1>
+
+<ul>
+  <% @actors.each do |actor| %>
+    <li>
+      <%= link_to "#{actor.first} #{actor.last}", actor %>
+    </li>
+  <% end %>
+</ul>
+
+<%= link_to "New Actor", new_actor_path %>

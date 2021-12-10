@@ -1,0 +1,8 @@
+<H1><%= @actor.first %> <%= @actor.last %></H1>
+
+<ul>
+  <li><%= link_to "Edit", edit_actor_path(@actor) %></li>
+  <li><%= link_to "Destroy", actor_path(@actor),
+                  method: :delete,
+                  data: { confirm: "Are you sure?" } %></li>
+</ul

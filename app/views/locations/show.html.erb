@@ -1,0 +1,8 @@
+<H1><%= @location.name %></H1>
+
+<ul>
+  <li><%= link_to "Edit", edit_location_path(@location) %></li>
+  <li><%= link_to "Destroy", location_path(@location),
+                  method: :delete,
+                  data: { confirm: "Are you sure?" } %></li>
+</ul

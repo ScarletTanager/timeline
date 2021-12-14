@@ -1,0 +1,28 @@
+<%= form_with model: event do |form| %>
+  <div>
+    <%= form.label :name %><br>
+    <%= form.text_field :name %>
+    <% @event.errors.full_messages_for(:name).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.label :location_id %><br>
+    <%= form.text_field :location_id %>
+  </div>
+
+  <div>
+    <%= form.label :short_description %><br>
+    <%= form.text_area :short_description %>
+  </div>
+
+  <div>
+    <%= form.label :description %><br>
+    <%= form.text_area :description %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

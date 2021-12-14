@@ -5,4 +5,36 @@
   <li><%= link_to "Destroy", location_path(@location),
                   method: :delete,
                   data: { confirm: "Are you sure?" } %></li>
-</ul
+</ul>
+
+<h2>Events</h2>
+<% @location.events.each do |event| %>
+  <p>
+    <strong>Name: </strong>
+    <%= event.name %>
+  </p>
+
+  <p>
+    <strong>Short Description: </strong>
+    <%= event.short_description %>
+  </p>
+<% end %>
+
+<h2>Add an event:</h2>
+<%= form_with model: [ @location, @location.events.build ] do |form| %>
+  <p>
+    <%= form.label :name %><br>
+    <%= form.text_field :name %>
+  </p>
+  <p>
+    <%= form.label :short_description %><br>
+    <%= form.text_area :short_description %>
+  </p>
+  <p>
+    <%= form.label :description %><br>
+    <%= form.text_area :description %>
+  </p>
+  <p>
+    <%= form.submit %>
+  </p>
+<% end %>

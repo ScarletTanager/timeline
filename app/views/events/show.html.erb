@@ -1,0 +1,8 @@
+<H1><%= @event.name %></H1>
+
+<ul>
+  <li><%= link_to "Edit", edit_event_path(@event) %></li>
+  <li><%= link_to "Destroy", event_path(@event),
+                  method: :delete,
+                  data: { confirm: "Are you sure?" } %></li>
+</ul>
